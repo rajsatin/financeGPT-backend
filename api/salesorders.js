@@ -14,7 +14,7 @@ export default async function handler(req, res) {  // vercel servel less functio
       `&client_id=${process.env.CLIENT_ID}` +
       `&response_type=code` +
       `&access_type=offline` +
-      `&redirect_uri=${process.env.REDIRECT_URI}`; // secuirtyCode
+      `&redirect_uri=${process.env.REDIRECT_URI}`; // financeCode
     return res.writeHead(302, { Location: authUrl }).end();
   }
 
@@ -48,7 +48,7 @@ export default async function handler(req, res) {  // vercel servel less functio
       tokens.access_token = data.access_token;
       tokens.refresh_token = data.refresh_token;
 
-      return res.status(200).send("✅ Authorization successful. You can now call /api/contacts to fetch your contacts.");
+      return res.status(200).send("✅ Authorization successful. You can now call /api/salesorders to fetch your details.");
     } catch (err) {
       console.error("Token exchange failed:", err);
       return res.status(500).send("Token exchange failed");
@@ -57,14 +57,14 @@ export default async function handler(req, res) {  // vercel servel less functio
 
   // Step 3: Fetch Contacts (Only if token is available)
   if (!tokens.access_token) {
-    return res.status(401).send("❌ Not authorized. Please visit /api/contacts?auth to start.");
+    return res.status(401).send("❌ Not authorized. Please visit /api/salesorders?auth to start.");
   }
 
   try {
     const page = 1;
-    const perPage = 20;
+    const perPage = 30;
     const orgId = process.env.ZOHO_ORGANISATION_ID;
-    const apiUrl = `https://www.zohoapis.in/books/v3/contacts?organization_id=${orgId}&page=${page}&per_page=${perPage}`;
+    const apiUrl = `https://www.zohoapis.in/books/v3/salesorders?organization_id=${orgId}&page=${page}&per_page=${perPage}`;
 
     const response = await fetch(apiUrl, {
       headers: {
