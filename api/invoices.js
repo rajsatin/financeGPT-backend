@@ -6,6 +6,7 @@ export default async function handler(req, res) {  // vercel servel less functio
 
   const baseURL = `https://${req.headers.host}`; // seperates the host and actual url 
   const url = new URL(req.url, baseURL);
+  const redirectPath = `${baseURL}${url.pathname}?securityCode`;
 
   // Step 1: Start OAuth Flow
   if (url.searchParams.has("auth")) {
@@ -14,7 +15,7 @@ export default async function handler(req, res) {  // vercel servel less functio
       `&client_id=${process.env.CLIENT_ID}` +
       `&response_type=code` +
       `&access_type=offline` +
-      `&redirect_uri=${process.env.REDIRECT_URI}`; // securityCode
+      `&redirect_uri=${redirectPath}`; // securityCode
     return res.writeHead(302, { Location: authUrl }).end();
   }
 
@@ -26,7 +27,7 @@ export default async function handler(req, res) {  // vercel servel less functio
     try {
       const params = new URLSearchParams({
         code,
-        redirect_uri: process.env.REDIRECT_URI,
+        redirect_uri: redirectPath,
         client_id: process.env.CLIENT_ID,
         client_secret: process.env.CLIENT_SECRET,
         grant_type: "authorization_code"
@@ -81,6 +82,6 @@ export default async function handler(req, res) {  // vercel servel less functio
     return res.status(200).json(data);
   } catch (err) {
     console.error("Fetch error:", err);
-    return res.status(500).send("Failed to fetch contacts");
+    return res.status(500).send("Failed to fetch Invoices");
   }
 }
