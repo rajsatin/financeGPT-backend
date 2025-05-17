@@ -61,8 +61,10 @@ export default async function handler(req, res) {
   }
 
   try {
+    const page = 1;
+    const perPage = 20;
     const orgId = process.env.ZOHO_ORGANISATION_ID;
-    const apiUrl = `https://www.zohoapis.in/books/v3/contacts?organization_id=${orgId}`;
+    const apiUrl = `https://www.zohoapis.in/books/v3/contacts?organization_id=${orgId}&page=${page}&per_page=${perPage}`;
 
     const response = await fetch(apiUrl, {
       headers: {
