@@ -1,0 +1,3 @@
+.env
+node_modules
+https://accounts.zoho.in/oauth/v2/auth?scope=ZohoBooks.fullaccess.all&client_id=1000.9PPIKGHM1S1CYBMMMSM1S5YY0B9YLP&response_type=code&access_type=offline&redirect_uri=http://localhost:3000/oauth/financeCode
