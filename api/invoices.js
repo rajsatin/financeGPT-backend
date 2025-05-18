@@ -62,8 +62,8 @@ export default async function handler(req, res) {  // vercel servel less functio
   }
 
   try {
-    const page = 1;
-    const perPage = 20;
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.per_page) || 50;
     const orgId = process.env.ZOHO_ORGANISATION_ID;
     const apiUrl = `https://www.zohoapis.in/books/v3/invoices?organization_id=${orgId}&page=${page}&per_page=${perPage}`;
 
